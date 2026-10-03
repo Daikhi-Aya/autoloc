@@ -1,10 +1,8 @@
 package tn.esprit.autoloc.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import tn.esprit.autoloc.entities.enums.ModePaiement;
 
 import java.math.BigDecimal;
@@ -15,6 +13,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)//pour nest pas cree private pour chaque attrébut
 public class Paiement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +24,9 @@ public class Paiement {
 
     @Enumerated(EnumType.STRING)
     ModePaiement modePaiement;
+
+    // N Paiement -> 1 Contrat (cote proprietaire)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "contrat_id")
+    Contrat contrat;
 }
