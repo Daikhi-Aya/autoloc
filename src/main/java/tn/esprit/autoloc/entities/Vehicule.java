@@ -19,7 +19,7 @@ import java.util.List;
 public class Vehicule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
 
     String immatriculation;
     String marque;

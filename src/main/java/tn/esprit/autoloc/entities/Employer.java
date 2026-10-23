@@ -14,7 +14,7 @@ import tn.esprit.autoloc.entities.enums.Role;
 public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
     String nom;
     String prenom;
 
