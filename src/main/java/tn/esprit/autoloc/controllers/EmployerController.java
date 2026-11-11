@@ -37,4 +37,15 @@ public class EmployerController {
     public void deleteById(@PathVariable Long idEmployer) {
         employerService.supprimerEmployerById(idEmployer);
     }
+    //affecter et desaffercter
+    @PutMapping("/desaffecter/{idEmployer}")
+    public Employer desaffecterEmployer(@PathVariable Long idEmployer) {
+        return employerService.desaffecterEmployer(idEmployer);
+    }
+
+    @PutMapping("/affecter/{idEmployer}/{idAgence}")
+    public Employer affecterEmployer(@PathVariable Long idEmployer, @PathVariable Long idAgence) {
+        return employerService.affecterEmployer(idEmployer, idAgence);
+    }
+
 }

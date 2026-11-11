@@ -1,5 +1,7 @@
 package tn.esprit.autoloc.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.autoloc.entities.Contrat;
@@ -11,9 +13,10 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("contrat")//identification lil path mtaana
+@Tag(name="gestion de contrats", description = "Crud")//
 public class ContratController {
     private final IContratService contratService;
-
+    @Operation(summary = "ajouter un contrat")//
     @PostMapping
     public Contrat addContrat(@RequestBody Contrat contrat) {
         return contratService.ajouterContrat(contrat);
