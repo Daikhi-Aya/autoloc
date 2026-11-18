@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @AllArgsConstructor
-
+@Slf4j
 public class IAgenceServiceImp implements IAgenceService {
-
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     private final AgenceRepository agenceRepository;
     private final VehiculeRepository vehiculeRepository;
@@ -73,5 +73,13 @@ public class IAgenceServiceImp implements IAgenceService {
 
 
     //****Scheduler******************************
+    // Question 2 : 2 minutes après la FIN de chaque exécution
+    @Scheduled(fixedDelay = 2, timeUnit = TimeUnit.MINUTES)
+    public void suivreNombreAgences() {
+        List<Agence> agences = agenceRepository.findAll();
+        log.info("[Suivi agences] Nombre total d'agences enregistrées : {}", agences.size());
+        log.info("[Suivi agences] Date et heure de la vérification : {}", LocalDateTime.now().format(FORMAT));
+    }
+
 
 }

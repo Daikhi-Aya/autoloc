@@ -11,13 +11,18 @@ import tn.esprit.autoloc.repositories.VehiculeRepository;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @AllArgsConstructor
-
+@Slf4j
 public class IVehiculeServiceImp implements IVehiculeService {
-
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
     private final VehiculeRepository vehiculeRepository;
     private final EquipementRepository equipementRepository;
@@ -80,6 +85,25 @@ public class IVehiculeServiceImp implements IVehiculeService {
 
 
     //************Scheduler**************************
+    // Question 1 : démarre 5 s après le lancement, puis toutes les 60 s
+    @Scheduled(initialDelay = 5, fixedRate = 60, timeUnit = TimeUnit.SECONDS)
+    public void actualiserEtatVehicules() {
+        List<Vehicule> vehicules = vehiculeRepository.findAll();
+        log.info("[Actualisation] Nombre total de véhicules enregistrés : {}", vehicules.size());
+        log.info("[Actualisation] Date et heure : {}", LocalDateTime.now().format(FORMAT));
+    }
+
+    // Question 3 : tous les lundis à 09h00
+    @Scheduled(cron = "0 0 9 * * MON")
+    public void genererRapportVehicules() {
+        List<Vehicule> vehicules = vehiculeRepository.findAll();
+        int total = vehicules.size();
+
+        log.info("========== RAPPORT HEBDOMADAIRE DES VÉHICULES ==========");
+        log.info("Nombre total de véhicules : {}", total);
+        log.info("Date et heure de génération : {}", LocalDateTime.now().format(FORMAT));
+        log.info("========================================================");
+    }
 
 
 }
